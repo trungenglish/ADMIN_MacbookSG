@@ -11,6 +11,7 @@ export const AuthContext = createContext({
 
 export const AuthWrapper = (props) => {
     const [user, setUser] = useState({
+        isAuthenticated: false,
         username:"",
         name: "",
         role: ''
