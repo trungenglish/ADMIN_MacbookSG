@@ -1,11 +1,31 @@
-import { NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 
 const LinkItem = ({ href, icon: Icon, text, badge }) => {
+    const { setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogOut = (event) => {
+        event.preventDefault();
+        localStorage.clear("access_token");
+        setUser({
+            isAuthenticated: false,
+            user: {
+                email: " ",
+                name: " ",
+                role: " "
+            }
+        })
+        navigate('/login', { replace: true });
+    }
+
     return (
         <li>
             <NavLink
                 to={href}
+                onClick={text === 'Log Out' ? handleLogOut : null}
                 className={({ isActive }) =>
                     `flex items-center p-2 
                     rounded-lg 
