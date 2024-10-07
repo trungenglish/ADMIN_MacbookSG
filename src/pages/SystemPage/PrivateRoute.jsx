@@ -8,6 +8,7 @@ const PrivateRoute = (props) => {
     const navigate = useNavigate();
 
     if (user.isAuthenticated) {
+
         return (
             <>
                 {props.children}

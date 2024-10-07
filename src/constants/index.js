@@ -16,18 +16,18 @@ import {
   FaUsersCog,
   FaListAlt,
 } from "react-icons/fa";
-
+import { FaBuildingUser } from "react-icons/fa6";
 
 export const links = [
   {
-    href: "/dashboard",
+    href: "/main/dashboard",
     icon: FaChartBar,
     text: "Dashboard",
   },
   {
-    href: "/kanban",
-    icon: FaCalendarAlt,
-    text: "Kanban",
+    href: "/main/account",
+    icon: FaBuildingUser,
+    text: "Account Management",
     badge: {
       text: "Pro",
       color: "bg-gray-100 text-gray-800",
@@ -35,7 +35,7 @@ export const links = [
     },
   },
   {
-    href: "/inbox",
+    href: "/main/inbox",
     icon: FaFacebookMessenger,
     text: "Inbox",
     badge: {
@@ -45,24 +45,24 @@ export const links = [
     },
   },
   {
-    href: "/users",
+    href: "/main/users",
     icon: FaUsersCog,
     text: "Users",
   },
   {
-    href: "/products",
+    href: "/main/products",
     icon: FaListAlt,
     text: "Products",
   },
   {
-    href: "/signin",
+    href: "/main/signin",
     icon: IoIosLogIn,
     text: "Sign In",
   },
   {
-    href: "/signup",
+    href: "/logout",
     icon: IoIosLogOut,
-    text: "Sign Up",
+    text: "Log Out",
   },
 ];
 
