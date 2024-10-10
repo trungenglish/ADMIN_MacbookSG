@@ -4,6 +4,7 @@ import {PageNotFound} from "../pages/SystemPage/PageNotFound.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Dashboard from "../components/Dashboard/Dashboard.jsx";
 import PrivateRoute from "../pages/SystemPage/PrivateRoute.jsx";
+import UserPage from "../pages/User/User.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 path: "dashboard",
                 element: <Dashboard />
+            },
+            {
+                path: "users",
+                element: <UserPage />
             },
         ]
     },

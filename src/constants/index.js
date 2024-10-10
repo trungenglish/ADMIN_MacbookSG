@@ -54,11 +54,11 @@ export const links = [
     icon: FaListAlt,
     text: "Products",
   },
-  {
-    href: "/main/signin",
-    icon: IoIosLogIn,
-    text: "Sign In",
-  },
+  // {
+  //   href: "/main/signin",
+  //   icon: IoIosLogIn,
+  //   text: "Sign In",
+  // },
   {
     href: "/logout",
     icon: IoIosLogOut,
