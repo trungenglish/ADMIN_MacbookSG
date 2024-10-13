@@ -4,7 +4,10 @@ import {PageNotFound} from "../pages/SystemPage/PageNotFound.jsx";
 import Login from "../pages/Auth/Login.jsx";
 import Dashboard from "../components/Dashboard/Dashboard.jsx";
 import PrivateRoute from "../pages/SystemPage/PrivateRoute.jsx";
-import UserPage from "../pages/User/User.jsx";
+import UserPage from "../pages/User.jsx";
+import ProductPage from "../pages/Product.jsx";
+import Category from "../pages/Category.jsx";
+import AdministratorPage from "../pages/Administrator.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -31,8 +34,20 @@ export const router = createBrowserRouter([
                 element: <Dashboard />
             },
             {
+                path: "administrators",
+                element: <AdministratorPage/>
+            },
+            {
                 path: "users",
                 element: <UserPage />
+            },
+            {
+                path: "products",
+                element: <ProductPage />
+            },
+            {
+                path: "category",
+                element: <Category/>
             },
         ]
     },

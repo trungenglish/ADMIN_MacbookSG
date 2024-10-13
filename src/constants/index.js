@@ -6,12 +6,13 @@ import {
   IoIosPerson,
   IoIosPersonAdd,
   IoIosEyeOff,
-  IoIosLogIn,
   IoIosLogOut,
 } from "react-icons/io";
+import { BiCategoryAlt } from "react-icons/bi";
+import { MdOutlineReviews } from "react-icons/md";
+import { FaClipboardCheck } from "react-icons/fa6";
 import {
   FaChartBar,
-  FaCalendarAlt,
   FaFacebookMessenger,
   FaUsersCog,
   FaListAlt,
@@ -22,12 +23,12 @@ export const links = [
   {
     href: "/main/dashboard",
     icon: FaChartBar,
-    text: "Dashboard",
+    text: "Bảng điều khiển",
   },
   {
-    href: "/main/account",
+    href: "/main/administrators",
     icon: FaBuildingUser,
-    text: "Account Management",
+    text: "Quản lý quản trị viên",
     badge: {
       text: "Pro",
       color: "bg-gray-100 text-gray-800",
@@ -37,7 +38,7 @@ export const links = [
   {
     href: "/main/inbox",
     icon: FaFacebookMessenger,
-    text: "Inbox",
+    text: "Tin nhắn",
     badge: {
       text: "4",
       color: "bg-blue-100 text-blue-800",
@@ -47,22 +48,32 @@ export const links = [
   {
     href: "/main/users",
     icon: FaUsersCog,
-    text: "Users",
+    text: "Quản lý khách hàng",
+  },
+  {
+    href: "/main/category",
+    icon: BiCategoryAlt,
+    text: "Danh mục",
   },
   {
     href: "/main/products",
     icon: FaListAlt,
-    text: "Products",
+    text: "Sản phẩm",
   },
-  // {
-  //   href: "/main/signin",
-  //   icon: IoIosLogIn,
-  //   text: "Sign In",
-  // },
+  {
+    href: "/main/orders",
+    icon: FaClipboardCheck,
+    text: "Đơn hàng",
+  },
+  {
+    href: "/main/reviews",
+    icon: MdOutlineReviews,
+    text: "Quản lý đánh giá",
+  },
   {
     href: "/logout",
     icon: IoIosLogOut,
-    text: "Log Out",
+    text: "Đăng xuất",
   },
 ];
 
