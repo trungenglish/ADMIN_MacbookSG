@@ -5,12 +5,13 @@ const getAllUserAPI = () => {
     return axios.get(URL_API);
 }
 
-const createUserAPI = (fullName, email, password, phoneNumber) => {
+const createUserAPI = (fullName, email, password, phoneNumber, city) => {
     const data = {
         name: fullName,
         email: email,
         password: password,
-        phone: phoneNumber
+        phone: phoneNumber,
+        city: city
     }
     const URL_API = "/api/v1/admin/users";
     return axios.post(URL_API, data);

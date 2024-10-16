@@ -22,8 +22,8 @@ const updateCategoryAPI =  (name) => {
 }
 
 const deleteCategoryAPI = (_id) => {
-    const URL_API = `/api/v1/admin/category/$${_id}`;
-    return axios.post(URL_API);
+    const URL_API = `/api/v1/admin/category/${_id}`;
+    return axios.delete(URL_API);
 }
 
 export {

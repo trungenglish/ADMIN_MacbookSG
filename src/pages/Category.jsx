@@ -11,7 +11,9 @@ const CategoryPage = () => {
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
     const filterData = dataCategory.filter((category) => {
-        category.name.toLowerCase().includes(searchData.toLowerCase())
+        return (
+            category.name.toLowerCase().includes(searchData.toLowerCase())
+        )
     })
 
     useEffect(() => {
