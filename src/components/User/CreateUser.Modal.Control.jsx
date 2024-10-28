@@ -11,9 +11,8 @@ const CreateUserModalControl = (props) => {
     const [city,setCity] = useState("")
 
     const handleSubmitBtn = async () => {
-        const res = await createUserAPI(fullName, email, password, phoneNumber)
-
-        if (res.data) {
+        const res = await createUserAPI(fullName, email, password, phoneNumber, city)
+        if (res.user) {
             notification.success({
                 message: "Create User",
                 description: "Create User Success"

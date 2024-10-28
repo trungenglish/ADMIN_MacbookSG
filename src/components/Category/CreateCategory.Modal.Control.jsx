@@ -8,7 +8,7 @@ const CreateCategoryModalControl = (props) => {
 
     const handleSubmitBtn = async () => {
         const res = await createCategoryAPI(name);
-        if (res.data) {
+        if (res.cate) {
             notification.success({
                 message: "Tạo mới danh mục",
                 description: "Tạo mới danh mục thành công"

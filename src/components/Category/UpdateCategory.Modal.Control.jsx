@@ -1,11 +1,18 @@
 import {Input, Modal, notification} from "antd";
 import {updateCategoryAPI} from "../../service/api/categoryApi.js";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const UpdateCategoryModalControl = (props) => {
     const {isModalUpdateOpen, setIsModalUpdateOpen, fetchAllCategory, dataUpdate, setDataUpdate} = props;
-    const [name, setName] = useState(dataUpdate?.name);
-    const [id, setId] = useState(dataUpdate?._id);
+    const [name, setName] = useState("");
+    const [id, setId] = useState("");
+
+    useEffect(() => {
+        if (dataUpdate) {
+            setName(dataUpdate.name);
+            setId(dataUpdate._id);
+        }
+    }, [dataUpdate]);
 
     const handleSubmitBtn = async () => {
         const res = await updateCategoryAPI(id, name);
@@ -33,7 +40,7 @@ const UpdateCategoryModalControl = (props) => {
 
     return (
         <Modal
-            title="Chỉnh sửa thông tin người dùng"
+            title="Chỉnh sửa thông tin danh mục"
             open={isModalUpdateOpen}
             onOk={handleSubmitBtn}
             onCancel={resetAndCloseModal}

@@ -6,8 +6,16 @@ import SearchBar from "../components/share/SearchBar.jsx";
 
 const UserPage = () => {
     const [dataUsers, setDataUsers] = useState([]);
-    const {searchData, setSearchData} = useState("");
+    const [searchData, setSearchData] = useState("");
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+
+    const filterData = dataUsers.filter((user) => {
+        return (
+            user.name.toLowerCase().includes(searchData.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchData.toLowerCase()) ||
+            user.phone.includes(searchData)
+        );
+    })
 
     useEffect(() => {
         fetchAllUsers();
@@ -22,11 +30,7 @@ const UserPage = () => {
         }
     }
 
-    const filterData = dataUsers.filter((user) => {
-        user.name.toLowerCase().includes(searchData.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchData.toLowerCase()) ||
-        user.phone.includes(searchData)
-    })
+
 
     return (
         <>
@@ -52,7 +56,7 @@ const UserPage = () => {
             <CreateUserModalControl
                 fetchAllUsers={fetchAllUsers}
                 isModalCreateOpen={isModalCreateOpen}
-                setIsModalCreatelOpen={setIsModalCreateOpen}
+                setIsModalCreateOpen={setIsModalCreateOpen}
             />
         </>
 
