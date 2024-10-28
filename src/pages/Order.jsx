@@ -1,30 +1,29 @@
+import SearchBar from "../components/share/SearchBar.jsx";
+import TableProduct from "../components/Product/TableProduct.jsx";
 import {useEffect, useState} from "react";
 import {getAllProductAPI} from "../service/api/productApi.js";
-import TableProduct from "../components/Product/TableProduct.jsx";
-import SearchBar from "../components/share/SearchBar.jsx";
-import CreateProductModalControl from "../components/Product/CreateProduct.Modal.Control.jsx";
 
-const ProductPage = () => {
-    const [dataProducts, setDataProducts] = useState([]);
+const OrderPage = () => {
+    const [dataOrders, setDataOrders] = useState([]);
     const [searchData, setSearchData] = useState("");
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
-    const filterData = dataProducts.filter((product) => {
+    const filterData = dataOrders.filter((order) => {
         return (
-            product.name.toLowerCase().includes(searchData.toLowerCase())
+            order.name.toLowerCase().includes(searchData.toLowerCase())
         )
     })
 
     useEffect(() => {
-        fetchAllProducts();
+        fetchAllOrders();
     }, []);
 
-    const fetchAllProducts = async () => {
+    const fetchAllOrders = async () => {
         const res = await getAllProductAPI();
         if (res && res.EC === 0) {
-            setDataProducts(res.data);
+            setDataOrders(res.data);
         } else {
-            setDataProducts([]);
+            setDataOrders([]);
         }
     }
 
@@ -48,17 +47,12 @@ const ProductPage = () => {
                 </div>
 
                 <TableProduct
-                    fetchAllProducts={fetchAllProducts}
-                    dataProducts={dataProducts}
+                    fetchAllOrders={fetchAllOrders}
+                    dataOrders={dataOrders}
                     filterData={filterData}/>
             </div>
-            <CreateProductModalControl
-                fetchAllProducts={fetchAllProducts}
-                isModalCreateOpen={isModalCreateOpen}
-                setIsModalCreateOpen={setIsModalCreateOpen}
-            />
         </>
     )
 }
 
-export default ProductPage;
+export default OrderPage;

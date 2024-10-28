@@ -13,8 +13,9 @@ const createCategoryAPI =  (name) => {
     return axios.post(URL_API, data);
 }
 
-const updateCategoryAPI =  (name) => {
+const updateCategoryAPI =  (id, name) => {
     const data = {
+        _id: id,
         name: name,
     }
     const URL_API = "/api/v1/admin/category";

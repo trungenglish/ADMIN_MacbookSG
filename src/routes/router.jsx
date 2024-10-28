@@ -8,6 +8,7 @@ import UserPage from "../pages/User.jsx";
 import ProductPage from "../pages/Product.jsx";
 import Category from "../pages/Category.jsx";
 import AdministratorPage from "../pages/Administrator.jsx";
+import OrderPage from "../pages/Order.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path: "category",
                 element: <Category/>
+            },
+            {
+                path: "orders",
+                element: <OrderPage/>
             },
         ]
     },
