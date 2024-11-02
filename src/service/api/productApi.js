@@ -5,6 +5,12 @@ const getAllProductAPI = async () => {
     return axios.get(URL_API);
 }
 
+const updateAvailableProductsAPI = async (id, isActive) => {
+    const data = {isActive}
+    const URL_API = `/api/v1/admin/product/availability/${id}`;
+    return axios.put(URL_API, data);
+}
+
 const createProductAPI = async (name, price,priceAfterDiscount, imgUrls, description, idCategory, quantity, discount) => {
     const data = {
         name: name,
@@ -42,5 +48,5 @@ const deleteProductAPI = async (id) => {
 }
 
 export {
-    getAllProductAPI, updateProductAPI, createProductAPI, deleteProductAPI
+    getAllProductAPI, updateProductAPI, createProductAPI, deleteProductAPI, updateAvailableProductsAPI
 }

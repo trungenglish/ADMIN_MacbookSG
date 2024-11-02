@@ -1,4 +1,10 @@
 import axios from 'axios';
+import NProgress from "nprogress";
+
+NProgress.configure({
+    showSpinner: true,
+    trickleSpeed: 100,
+});
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL
@@ -6,23 +12,26 @@ const instance = axios.create({
 
 instance.interceptors.request.use(config => {
     // Do something before request is sent
+    NProgress.start();
     config.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`;
     return config;
 }, error => {
     // Do something with request error
+    NProgress.done();
     return Promise.reject(error);
 });
 
 instance.interceptors.response.use(
     response => {
+        NProgress.done();
     if (response && response.data) {
         return response.data;
     }
     return response;
 },
     async (error) => {
+        NProgress.done();
         const originalRequest = error.config;
-
         // Kiểm tra nếu lỗi là 401 và chưa thử lại
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true; // Đánh dấu đã thử lại
