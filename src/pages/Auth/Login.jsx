@@ -24,9 +24,9 @@ const Login = () => {
 
         try {
             const res = await loginAPI(username, password);
-            console.log("check res: ",res)
             if (res && res.EC === 0){
                 localStorage.setItem('access_token', res.access_token);
+                localStorage.setItem('refresh_token', res.refreshToken);
                 setUser({
                     isAuthenticated: true,
                     user: {
@@ -89,7 +89,9 @@ const Login = () => {
                         </div>
 
                         <button type="submit"
-                                className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition">Login
+                                className="w-full bg-blue-500 text-white p-3
+                                rounded-lg hover:bg-blue-600 transition">
+                            Login
                         </button>
                     </form>
                 </div>

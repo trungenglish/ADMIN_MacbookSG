@@ -1,7 +1,6 @@
 import { CiEdit } from "react-icons/ci";
 import { ImBin } from "react-icons/im";
 import {useState} from "react";
-import {deleteCategoryAPI} from "../../service/api/categoryApi.js";
 import {notification} from "antd";
 import UpdateAdministratorModalControl from "./UpdateAdministrator .Modal.Control.jsx";
 import {deleteAdminAPI} from "../../service/api/administratorApi.js";
@@ -53,9 +52,10 @@ const TableAdministrator = (props) => {
                     filterData.map((user, index) => (
                         <tr key={user._id} className="border-b border-gray-200 hover:bg-gray-50">
                             <td className="py-2 px-4 text-sm">{index + 1}</td>
-                            <td className="py-2 px-4 text-sm hidden md:table-cell">{user.name}</td>
-                            <td className="py-2 px-4 text-sm break-words w-0">{user.email}</td>
-                            <td className="py-2 px-4 text-sm hidden md:table-cell">{user.phone}</td>
+                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{user.name}</td>
+                            <td className="py-2 px-4 text-sm w-1/5 break-words">{user.username}</td>
+                            <td className="py-2 px-4 text-sm w-1/5 break-words">{user.email}</td>
+                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{user.phone}</td>
                             <td className="py-2 px-4 text-sm flex items-center space-x-4"> {/* Căn giữa nội dung */}
                                 <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
                                       onClick={handleUpdateUser}>
@@ -70,7 +70,7 @@ const TableAdministrator = (props) => {
                     ))
                 ) : (
                     <tr>
-                        <td colSpan="5" className="text-center py-4 text-gray-600">
+                    <td colSpan="5" className="text-center py-4 text-gray-600">
                             Không có tài khoản quản trị nào.
                         </td>
                     </tr>

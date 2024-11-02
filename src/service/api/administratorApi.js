@@ -1,7 +1,7 @@
 import axios from "../axiosCustomize.js";
 
 const getAllAdminAPI = async () => {
-    const URL_API = "/api/v1/admin/";
+    const URL_API = "/api/v1/admin/administrator";
     return axios.get(URL_API);
 }
 
