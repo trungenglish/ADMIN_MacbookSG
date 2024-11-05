@@ -40,7 +40,7 @@ instance.interceptors.response.use(
                 // Gọi API để refresh token
                 const refreshToken = localStorage.getItem('refresh_token');
                 const response = await axios.post(
-                    `${import.meta.env.VITE_BACKEND_URL}/refresh-token`,
+                    `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/refresh-token`,
                     { refreshToken }
                 );
 
@@ -58,7 +58,9 @@ instance.interceptors.response.use(
                 return Promise.reject(refreshError);
             }
         }
-
+        if (error.response && error.response.data) {
+            return Promise.reject(error.response.data);
+        }
         return Promise.reject(error);
     }
 );

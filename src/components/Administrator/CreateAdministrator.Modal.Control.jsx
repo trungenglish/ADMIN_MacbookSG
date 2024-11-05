@@ -3,7 +3,7 @@ import {Input, Modal, notification, Select} from "antd";
 import {createAdminAPI} from "../../service/api/authApi.js";
 
 const CreateAdministratorModalControl = (props) => {
-    const {isModalCreateOpen, setIsModalCreateOpen, fetchAllUsers} = props;
+    const {isModalCreateOpen, setIsModalCreateOpen, fetchAllAdmin} = props;
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -12,20 +12,29 @@ const CreateAdministratorModalControl = (props) => {
     const [role, setRole] = useState("");
 
     const handleSubmitBtn = async () => {
-        const res = await createAdminAPI(name);
-        if (res.data) {
-            notification.success({
-                message: "Tạo mới danh mục",
-                description: "Tạo mới danh mục thành công"
-            })
-            resetAndCloseModal();
-            await fetchAllUsers();
-        } else {
+        try {
+            const res = await createAdminAPI(name, username, email, phone, password, role);
+            console.log('check res', res)
+            if (res && res.data) {
+                notification.success({
+                    message: "Tạo mới quản trị",
+                    description: "Tạo mới quản trị thành công"
+                })
+                resetAndCloseModal();
+                await fetchAllAdmin();
+            } else {
+                notification.error({
+                    message: "Lỗi khi tạo mới quản trị",
+                    description: JSON.stringify(res.EM)
+                })
+            }
+        }catch(error) {
             notification.error({
-                message: "Lỗi khi tạo mới danh mục",
-                description: JSON.stringify(res.message)
-            })
+                message: error.message,
+                description: JSON.stringify(error.errors)
+            });
         }
+
     }
 
     const resetAndCloseModal = () => {
@@ -52,14 +61,14 @@ const CreateAdministratorModalControl = (props) => {
                         onChange={setRole}
                         placeholder="Chọn phân quyền"
                     >
-                        <Select.Option value="admin">Quản trị</Select.Option>
-                        <Select.Option value="finance">Quản lý tài chính</Select.Option>
-                        <Select.Option value="support">Hỗ trợ khách hàng</Select.Option>
+                        <Select.Option value="quản trị">Quản trị</Select.Option>
+                        <Select.Option value="quản lý tài chính">Quản lý tài chính</Select.Option>
+                        <Select.Option value="hỗ trợ khách hàng">Hỗ trợ khách hàng</Select.Option>
                         {/* Thêm các tùy chọn khác nếu cần */}
                     </Select>
                 </div>
                 <div>
-                    <label className="block text-gray-700 font-medium mb-1">Tên danh mục </label>
+                    <label className="block text-gray-700 font-medium mb-1">Tên người dùng </label>
                     <Input
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         value={name}

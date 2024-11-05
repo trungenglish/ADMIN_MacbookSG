@@ -1,17 +1,37 @@
 import { useEffect, useState } from "react";
 import { updateProductAPI } from "../../service/api/productApi.js";
 import { Input, Modal, notification, Select } from "antd";
+import {getAllCategoryAPI} from "../../service/api/categoryApi.js";
 
 const UpdateProductModalControl = (props) => {
-    const { isModalUpdateOpen, setIsModalUpdateOpen, fetchAllProducts, dataUpdate, setDataUpdate, categories } = props; // Nhận categories từ props
+    const { isModalUpdateOpen, setIsModalUpdateOpen, fetchAllProducts, dataUpdate, setDataUpdate } = props; // Nhận categories từ props
     const [name, setName] = useState("");
+    const [condition, setCondition] = useState("");
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
-    const [discountPercent, setDiscountPercent] = useState("");
+    const [discount, setDiscount] = useState("");
     const [priceAfterDiscount, setPriceAfterDiscount] = useState("");
     const [image, setImage] = useState("");
     const [idCategory, setIdCategory] = useState(""); // Lưu id danh mục
+    const [categories, setCategories] = useState([]);
     const [id, setId] = useState("");
+    const [errors, setErrors] = useState({
+        quantity: "",
+        price: "",
+        discount: ""
+    });
+
+    useEffect(() => {
+        const fetchAllCategory = async () => {
+            const res = await getAllCategoryAPI();
+            if (res && res.EC === 0) {
+                setCategories(res.data);
+            }else {
+                setCategories([]);
+            }
+        };
+        fetchAllCategory();
+    }, []);
 
     useEffect(() => {
         if (dataUpdate) {
@@ -19,19 +39,72 @@ const UpdateProductModalControl = (props) => {
             setId(dataUpdate._id);
             setQuantity(dataUpdate.quantity);
             setPrice(dataUpdate.price);
-            setDiscountPercent(dataUpdate.discountPercent);
+            setDiscount(dataUpdate.discount);
             setPriceAfterDiscount(dataUpdate.priceAfterDiscount);
             setImage(dataUpdate.image);
-            setIdCategory(dataUpdate.idCategory); // Gán danh mục
+            setIdCategory(dataUpdate.idCategory._id || "");
         }
     }, [dataUpdate]);
 
+    useEffect(() => {
+        const numberPrice = Number(price);
+        const numberDiscount = Number(discount);
+
+        if (!isNaN(numberPrice) && numberPrice >= 0 && !isNaN(numberDiscount) && numberDiscount >= 0 && numberDiscount <= 100) {
+            const discountedPrice = numberPrice - (numberPrice * numberDiscount / 100);
+            setPriceAfterDiscount(discountedPrice.toFixed(2)); // Cập nhật giá sau giảm với 2 chữ số thập phân
+        } else {
+            setPriceAfterDiscount(""); // Nếu dữ liệu không hợp lệ, reset giá trị
+        }
+    }, [price, discount]);
+
+    const validateInput = (value, field) => {
+        const numberValue = Number(value);
+        if (isNaN(numberValue) || numberValue < 0) {
+            setErrors(prev => ({
+                ...prev,
+                [field]: "Giá trị phải là số dương!"
+            }));
+        } else {
+            setErrors(prev => ({
+                ...prev,
+                [field]: ""
+            }));
+        }
+    };
+
+    const handleQuantityChange = (event) => {
+        const value = event.target.value;
+        setQuantity(value);
+        validateInput(value, "quantity");
+    };
+
+    const handlePriceChange = (event) => {
+        const value = event.target.value;
+        setPrice(value);
+        validateInput(value, "price");
+    };
+
+    const handleDiscountChange = (event) => {
+        const value = event.target.value;
+        setDiscount(value);
+        validateInput(value, "discount");
+    };
+
     const handleSubmitBtn = async () => {
+        if (errors.quantity || errors.price || errors.discount) {
+            notification.error({
+                message: "Có lỗi trong dữ liệu nhập",
+                description: "Vui lòng sửa lỗi trước khi tiếp tục.",
+            });
+            return;
+        }
+
         const res = await updateProductAPI(id, {
             name,
             quantity,
             price,
-            discountPercent,
+            discount,
             priceAfterDiscount,
             image,
             idCategory
@@ -56,9 +129,10 @@ const UpdateProductModalControl = (props) => {
         setIsModalUpdateOpen(false);
         setId("");
         setName("");
+        setCondition("");
         setQuantity("");
         setPrice("");
-        setDiscountPercent("");
+        setDiscount("");
         setPriceAfterDiscount("");
         setImage("");
         setIdCategory("");
@@ -78,7 +152,7 @@ const UpdateProductModalControl = (props) => {
             <div className="flex flex-col gap-4">
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">ID</label>
-                    <Input value={id} disabled />
+                    <Input value={id} disabled/>
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Danh mục</label>
@@ -96,27 +170,36 @@ const UpdateProductModalControl = (props) => {
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Tên</label>
-                    <Input value={name} onChange={(event) => setName(event.target.value)} />
+                    <Input value={name} onChange={(event) => setName(event.target.value)}/>
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-1">Tình trạng</label>
+                    <Input value={condition} onChange={(event) => setCondition(event.target.value)}/>
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Số lượng</label>
-                    <Input value={quantity} onChange={(event) => setQuantity(event.target.value)} />
+                    <Input value={quantity} onChange={handleQuantityChange}/>
+                    {errors.quantity && <span className="text-red-500">{errors.quantity}</span>}
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Giá gốc</label>
-                    <Input value={price} onChange={(event) => setPrice(event.target.value)} />
+                    <Input value={price} onChange={handlePriceChange}/>
+                    {errors.price && <span className="text-red-500">{errors.price}</span>}
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">% giảm</label>
-                    <Input value={discountPercent} onChange={(event) => setDiscountPercent(event.target.value)} />
+                    <Input value={discount} onChange={handleDiscountChange}/>
+                    {errors.discount && <span className="text-red-500">{errors.discount}</span>}
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Giá bán</label>
-                    <Input value={priceAfterDiscount} onChange={(event) => setPriceAfterDiscount(event.target.value)} />
+                    <Input
+                        disabled
+                        value={priceAfterDiscount}/>
                 </div>
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Hình ảnh</label>
-                    <Input value={image} onChange={(event) => setImage(event.target.value)} />
+                    <Input value={image} onChange={(event) => setImage(event.target.value)}/>
                 </div>
             </div>
         </Modal>

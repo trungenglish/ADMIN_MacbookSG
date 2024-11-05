@@ -1,8 +1,8 @@
 import SearchBar from "../components/share/SearchBar.jsx";
 import TableProduct from "../components/Product/TableProduct.jsx";
 import {useEffect, useState} from "react";
-import {getAllProductAPI} from "../service/api/productApi.js";
 import {Spin} from "antd";
+import {getAllOrderAPI} from "../service/api/orderApi.js";
 
 const OrderPage = () => {
     const [appLoading, setAppLoading] = useState(false);
@@ -21,7 +21,7 @@ const OrderPage = () => {
     }, []);
 
     const fetchAllOrders = async () => {
-        const res = await getAllProductAPI();
+        const res = await getAllOrderAPI();
         if (res && res.EC === 0) {
             setDataOrders(res.data);
         } else {
@@ -47,7 +47,7 @@ const OrderPage = () => {
                             <SearchBar
                                 searchData={searchData}
                                 setSearchData={setSearchData}
-                                placeholder="Tìm kiếm sản phẩm theo tên"
+                                placeholder="Tìm kiếm đơn hàng theo sdt"
                             />
                             <button
                                 className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700"

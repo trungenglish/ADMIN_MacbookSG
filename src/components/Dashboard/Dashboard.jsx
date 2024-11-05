@@ -1,34 +1,56 @@
-import React from 'react';
+import {useEffect, useState} from "react";
+import {countUserAPI} from "../../service/api/userApi.js";
 
-// Data của các thống kê nhân viên
-const employeeStats = [
-    {
-        title: "Total Employees",
-        count: 200,
-        bgColor: "bg-gray-100",
-        icon: "👥",
-    },
-    {
-        title: "On Leave",
-        count: 15,
-        bgColor: "bg-blue-100",
-        icon: "🏖️",
-    },
-    {
-        title: "New Joinees",
-        count: 25,
-        bgColor: "bg-yellow-100",
-        icon: "🎉",
-    },
-    {
-        title: "Resigned",
-        count: 5,
-        bgColor: "bg-red-100",
-        icon: "🚪",
-    },
-];
+const Dashboard = () => {
+    const [userCount, setUserCount] = useState(0);
+    const [productCount, setProductCount] = useState(0);
 
-function Dashboard() {
+    useEffect(() => {
+        const countUser = async () => {
+            const res = await countUserAPI();
+            if (res && res.EC === 0) {
+                setUserCount(res.data);
+            }
+        }
+        countUser();
+
+        const countProduct = async () => {
+            const res = await countUserAPI();
+            if (res && res.EC === 0) {
+                setProductCount(res.data);
+            }
+        }
+        countProduct();
+
+    }, []);
+
+    const employeeStats = [
+        {
+            title: "Người dùng",
+            count: userCount,
+            bgColor: "bg-gray-100",
+            icon: "👥",
+        },
+        {
+            title: "Sản phẩm",
+            count: productCount,
+            bgColor: "bg-blue-100",
+            icon: "🏖️",
+        },
+        {
+            title: "Đơn hàng đã xử lý",
+            count: 10,
+            bgColor: "bg-yellow-100",
+            icon: "🎉",
+        },
+        {
+            title: "Doanh thu",
+            count: "100.000.000đ",
+            bgColor: "bg-red-100",
+            icon: "🚪",
+        },
+    ];
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>

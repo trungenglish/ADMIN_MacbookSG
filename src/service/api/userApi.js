@@ -34,6 +34,11 @@ const deleteUserAPI = (_id) => {
     return axios.delete(URL_API);
 }
 
+const countUserAPI = () => {
+    const URL_API = "/api/v1/admin/amount-of-users";
+    return axios.get(URL_API);
+}
+
 export {
-    getAllUserAPI, createUserAPI, updateUserAPI, deleteUserAPI
+    getAllUserAPI, createUserAPI, updateUserAPI, deleteUserAPI, countUserAPI
 }

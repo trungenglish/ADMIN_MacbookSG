@@ -1,31 +1,41 @@
 import { CiEdit } from "react-icons/ci";
 import { ImBin } from "react-icons/im";
 import {useState} from "react";
-import {notification} from "antd";
+import {Modal, notification} from "antd";
 import UpdateAdministratorModalControl from "./UpdateAdministrator .Modal.Control.jsx";
 import {deleteAdminAPI} from "../../service/api/administratorApi.js";
 
 const TableAdministrator = (props) => {
-    const {dataAdministrator, filterData, fetchAllUsers} = props;
+    const {dataAdministrator, filterData, fetchAllAdmin} = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 
-    const handleUpdateUser = (user) => {
-        setDataUpdate(user);
+    const handleUpdateAdmin = (admin) => {
+        setDataUpdate(admin);
         setIsModalUpdateOpen(true);
     }
 
-    const handleDeleteUser = async (_id) => {
+    const confirmDelete = (_id) => {
+        Modal.confirm({
+            title: 'Xác nhận xóa',
+            content: 'Bạn có chắc chắn muốn xóa tài khoản này không?',
+            okText: 'Xóa',
+            cancelText: 'Hủy',
+            onOk: () => handleDeleteAdmin(_id),
+        });
+    };
+
+    const handleDeleteAdmin = async (_id) => {
         const res = await deleteAdminAPI(_id);
         if (res.data) {
             notification.success({
-                message: "Xóa người dùng",
-                description: "Xóa người dùng thành công"
+                message: "Xóa quản trị viên",
+                description: "Xóa quản trị viên thành công"
             })
-            await fetchAllUsers();
+            await fetchAllAdmin();
         } else {
             notification.error({
-                message: "Lỗi khi xóa người dùng",
+                message: "Lỗi khi xóa quản trị viên",
                 description: JSON.stringify(res.message)
             })
         }
@@ -43,26 +53,28 @@ const TableAdministrator = (props) => {
                     </th>
                     <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Email</th>
                     <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap hidden md:table-cell">Sđt</th>
+                    <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Vai trò</th>
                     <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Hành động</th>
                     {/* Căn giữa tiêu đề */}
                 </tr>
                 </thead>
                 <tbody>
                 {filterData && filterData.length > 0 ? (
-                    filterData.map((user, index) => (
-                        <tr key={user._id} className="border-b border-gray-200 hover:bg-gray-50">
+                    filterData.map((admin, index) => (
+                        <tr key={admin._id} className="border-b border-gray-200 hover:bg-gray-50">
                             <td className="py-2 px-4 text-sm">{index + 1}</td>
-                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{user.name}</td>
-                            <td className="py-2 px-4 text-sm w-1/5 break-words">{user.username}</td>
-                            <td className="py-2 px-4 text-sm w-1/5 break-words">{user.email}</td>
-                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{user.phone}</td>
+                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{admin.name}</td>
+                            <td className="py-2 px-4 text-sm w-1/5 break-words">{admin.username}</td>
+                            <td className="py-2 px-4 text-sm w-1/5 break-words">{admin.email}</td>
+                            <td className="py-2 px-4 text-sm hidden md:table-cell w-1/5">{admin.phone}</td>
+                            <td className="py-2 px-4 text-sm w-1/5 break-words">{admin.role}</td>
                             <td className="py-2 px-4 text-sm flex items-center space-x-4"> {/* Căn giữa nội dung */}
                                 <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                      onClick={handleUpdateUser}>
+                                      onClick={() => handleUpdateAdmin(admin)}>
                                 <CiEdit size={20}/>
                             </span>
                                 <span className="text-red-500 hover:text-red-700 cursor-pointer"
-                                      onClick={handleDeleteUser}>
+                                      onClick={() => confirmDelete(admin._id)}>
                                 <ImBin size={20}/>
                             </span>
                             </td>
@@ -78,7 +90,7 @@ const TableAdministrator = (props) => {
                 </tbody>
             </table>
             <UpdateAdministratorModalControl
-                fetchAllUsers={fetchAllUsers}
+                fetchAllAdmin={fetchAllAdmin}
                 isModalUpdateOpen={isModalUpdateOpen}
                 setIsModalUpdateOpen={setIsModalUpdateOpen}
                 dataUpdate={dataUpdate}

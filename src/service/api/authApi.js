@@ -6,9 +6,9 @@ const loginAPI = async (username, password) => {
     return axios.post(URL_API, data)
 }
 
-const createAdminAPI = async (name, username, email, password, role) => {
+const createAdminAPI = async (name, username, email, phone, password, role) => {
     const URL_API = "/api/v1/admin/register";
-    const data = {name, username, email, password, role}
+    const data = {name, username, email, phone, password, role}
     return axios.post(URL_API, data)
 }
 

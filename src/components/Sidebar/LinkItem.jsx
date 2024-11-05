@@ -25,7 +25,7 @@ const LinkItem = ({ href, icon: Icon, text, badge }) => {
         <li>
             <NavLink
                 to={href}
-                onClick={text === 'Log Out' ? handleLogOut : null}
+                onClick={text === 'Đăng xuất' ? handleLogOut : null}
                 className={({ isActive }) =>
                     `flex items-center p-2 
                     rounded-lg 

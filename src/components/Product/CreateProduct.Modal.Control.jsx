@@ -6,6 +6,7 @@ import {getAllCategoryAPI} from "../../service/api/categoryApi.js";
 const CreateProductModalControl = (props) => {
     const { isModalCreateOpen, setIsModalCreateOpen, fetchAllProducts } = props;
     const [name, setName] = useState("");
+    const [condition, setCondition] = useState("");
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
     const [discount, setDiscount] = useState("");
@@ -89,8 +90,8 @@ const CreateProductModalControl = (props) => {
         try {
             const res = await createProductAPI(
                 name,
+                condition,
                 price,
-                priceAfterDiscount,
                  [image],
                 description,
                 idCategory,
@@ -130,6 +131,7 @@ const CreateProductModalControl = (props) => {
     const resetAndCloseModal = () => {
         setIsModalCreateOpen(false);
         setName("");
+        setCondition("");
         setQuantity("");
         setPrice("");
         setDiscount("");
@@ -172,6 +174,14 @@ const CreateProductModalControl = (props) => {
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         value={name}
                         onChange={(event) => setName(event.target.value)}
+                    />
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-1">Tình trạng</label>
+                    <Input
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={condition}
+                        onChange={(event) => setCondition(event.target.value)}
                     />
                 </div>
                 <div>
