@@ -12,7 +12,6 @@ const AdministratorPage = () => {
     const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
     const filterData = dataAdministrator.filter((administrator) => {
-        console.log('res2', administrator)
         return (
             administrator.name.toLowerCase().includes(searchData.toLowerCase()) ||
             administrator.username.toLowerCase().includes(searchData.toLowerCase()) ||
@@ -60,7 +59,6 @@ const AdministratorPage = () => {
                                 className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700"
                                 onClick={() => {
                                     setIsModalCreateOpen(true);
-                                    alert("Chuyển đến trang tạo mới người dùng");
                                 }}
                             >
                                 Tạo mới
@@ -68,12 +66,12 @@ const AdministratorPage = () => {
                         </div>
 
                         <TableAdministrator
-                            fetchAllUsers={fetchAllAdmin}
+                            fetchAllAdmin={fetchAllAdmin}
                             dataAdministrator={dataAdministrator}
                             filterData={filterData}/>
                     </div>
                     <CreateAdministratorModalControl
-                        fetchAllUsers={fetchAllAdmin}
+                        fetchAllAdmin={fetchAllAdmin}
                         isModalCreateOpen={isModalCreateOpen}
                         setIsModalCreateOpen={setIsModalCreateOpen}
                     />

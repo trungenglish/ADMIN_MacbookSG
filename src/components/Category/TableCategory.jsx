@@ -36,7 +36,7 @@ const CategoryTable = (props) => {
         } else {
             notification.error({
                 message: "Lỗi khi xóa danh mục",
-                description: JSON.stringify(res.message),
+                description: JSON.stringify(res.EM),
             });
         }
     };

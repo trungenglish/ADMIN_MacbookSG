@@ -27,6 +27,7 @@ const UserPage = () => {
     const fetchAllUsers = async () => {
         setAppLoading(true);
         const res = await getAllUserAPI();
+        console.log('res', res)
         if (res && res.EC === 0) {
             setDataUsers(res.data);
         }else {

@@ -10,8 +10,6 @@ const TableProduct = (props) => {
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 
-    console.log('data',dataProducts);
-
     const handleUpdatePro = (product) => {
         setDataUpdate(product);
         setIsModalUpdateOpen(true);
@@ -86,6 +84,7 @@ const TableProduct = (props) => {
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Giá gốc</th>
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">% giảm</th>
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Giá bán</th>
+                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Tình trạng</th>
                     <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Hành động</th>
                 </tr>
                 </thead>
@@ -97,12 +96,13 @@ const TableProduct = (props) => {
                             <td className="py-2 px-4 text-center text-sm">{index + 1}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.name}</td>
                             <td className="py-2 px-4 text-sm text-center break-words w-0">
-                                <img src={product.imgUrls} alt={product.name} className="max-w-[100px] h-auto" />
+                                <img src={product.imgUrls} alt={product.name} className="max-w-[100px] h-auto"/>
                             </td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.quantity}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatPrice(product.price)}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.discount}%</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatPrice(product.priceAfterDiscount)}</td>
+                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.condition}</td>
                             <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">
                                     <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
                                           onClick={() => handleUpdatePro(product)}>

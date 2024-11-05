@@ -18,7 +18,7 @@ const updateAdminAPI = async (_id, role, name, email, phone) => {
 }
 
 const deleteAdminAPI = async (_id) => {
-    const URL_API = `/api/v1/admin//${_id}`;
+    const URL_API = `/api/v1/admin/administrator/${_id}`;
     return axios.delete(URL_API);
 }
 

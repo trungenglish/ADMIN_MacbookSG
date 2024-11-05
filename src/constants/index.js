@@ -36,7 +36,7 @@ export const links = [
     },
   },
   {
-    href: "/main/inbox",
+    href: "/main/messages",
     icon: FaFacebookMessenger,
     text: "Tin nhắn",
     badge: {

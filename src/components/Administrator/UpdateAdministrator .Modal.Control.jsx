@@ -2,9 +2,8 @@ import {Input, Modal, notification, Select} from "antd";
 import {useState} from "react";
 import {updateAdminAPI} from "../../service/api/administratorApi.js";
 
-
 const UpdateAdministratorModalControl = (props) => {
-    const {isModalUpdateOpen, setIsModalUpdateOpen, fetchAllUsers, dataUpdate, setDataUpdate} = props;
+    const {isModalUpdateOpen, setIsModalUpdateOpen, fetchAllAdmin, dataUpdate, setDataUpdate} = props;
     const [name, setName] = useState(dataUpdate?.name);
     const [id, setId] = useState(dataUpdate?._id);
     const [role, setRole] = useState(dataUpdate?.role);

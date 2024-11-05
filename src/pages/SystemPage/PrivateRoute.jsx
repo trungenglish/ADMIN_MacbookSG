@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 const PrivateRoute = (props) => {
     const {user} = useContext(AuthContext);
     const navigate = useNavigate();
+
+    console.log("User: ", user);
     if (user && user.user.name) {
         return (
             <>
