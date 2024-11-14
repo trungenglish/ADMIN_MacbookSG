@@ -10,7 +10,7 @@ import Category from "../pages/Category.jsx";
 import AdministratorPage from "../pages/Administrator.jsx";
 import OrderPage from "../pages/Order.jsx";
 import Messages from "../pages/Messages.jsx";
-import CreateProductPage from "../components/Product/CreateProductPage.jsx";
+import CreateProduct from "../components/Product/CreateProduct.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "create-product",
-                element: <CreateProductPage/>
+                element: <CreateProduct/>
             }
         ]
     },
