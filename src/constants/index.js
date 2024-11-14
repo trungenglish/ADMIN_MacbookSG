@@ -56,7 +56,7 @@ export const links = [
     text: "Danh mục",
   },
   {
-    href: "/main/products",
+    href: "/main/create-product",
     icon: FaListAlt,
     text: "Sản phẩm",
   },

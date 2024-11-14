@@ -1,8 +1,8 @@
 import SearchBar from "../components/share/SearchBar.jsx";
-import TableProduct from "../components/Product/TableProduct.jsx";
 import {useEffect, useState} from "react";
 import {Spin} from "antd";
 import {getAllOrderAPI} from "../service/api/orderApi.js";
+import TableOrder from "../components/Order/TableOrder.jsx";
 
 const OrderPage = () => {
     const [appLoading, setAppLoading] = useState(false);
@@ -12,7 +12,7 @@ const OrderPage = () => {
 
     const filterData = dataOrders.filter((order) => {
         return (
-            order.name.toLowerCase().includes(searchData.toLowerCase())
+            order.idUser.name.toLowerCase().includes(searchData.toLowerCase())
         )
     })
 
@@ -59,7 +59,7 @@ const OrderPage = () => {
                             </button>
                         </div>
 
-                        <TableProduct
+                        <TableOrder
                             fetchAllOrders={fetchAllOrders}
                             dataOrders={dataOrders}
                             filterData={filterData}/>

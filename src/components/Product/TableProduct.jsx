@@ -6,7 +6,7 @@ import { Modal, notification } from "antd";
 import { deleteProductAPI, updateAvailableProductsAPI } from "../../service/api/productApi.js";
 
 const TableProduct = (props) => {
-    const { dataProducts, filterData, fetchAllProducts } = props;
+    const { filterData, fetchAllProducts } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
 

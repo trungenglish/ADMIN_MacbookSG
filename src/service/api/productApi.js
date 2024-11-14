@@ -11,25 +11,24 @@ const updateAvailableProductsAPI = async (id, isActive) => {
     return axios.put(URL_API, data);
 }
 
-const createProductAPI = async (name, condition, price, imgUrls, description, idCategory, quantity, discount) => {
+const createProductAPI = async (name, description, idCategory, defaultVariant, variants, image) => {
     const data = {
         name: name,
-        condition: condition,
-        price: price,
-        imgUrls: imgUrls,
         description: description,
         idCategory: idCategory,
-        quantity: quantity,
-        discount: discount
-    }
+        image: image,
+        defaultVariant: defaultVariant,
+        variants: variants
+    };
     const URL_API = "/api/v1/admin/product";
     return axios.post(URL_API, data);
 }
 
-const updateProductAPI = async (id, name, price,priceAfterDiscount, imgUrls, description, idCategory, quantity, discount) => {
+const updateProductAPI = async (id, name, condition, price,priceAfterDiscount, imgUrls, description, idCategory, quantity, discount) => {
     const data = {
         _id: id,
         name: name,
+        condition: condition,
         price: price,
         priceAfterDiscount: priceAfterDiscount,
         imgUrls: imgUrls,

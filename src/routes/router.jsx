@@ -10,6 +10,7 @@ import Category from "../pages/Category.jsx";
 import AdministratorPage from "../pages/Administrator.jsx";
 import OrderPage from "../pages/Order.jsx";
 import Messages from "../pages/Messages.jsx";
+import CreateProductPage from "../components/Product/CreateProductPage.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
             {
                 path: "messages",
                 element: <Messages/>
+            },
+            {
+                path: "create-product",
+                element: <CreateProductPage/>
             }
         ]
     },
