@@ -4,12 +4,14 @@ import TableProduct from "../components/Product/TableProduct.jsx";
 import SearchBar from "../components/share/SearchBar.jsx";
 import CreateProductModalControl from "../components/Product/CreateProduct.Modal.Control.jsx";
 import {Spin} from "antd";
+import {useNavigate} from "react-router-dom";
 
 const ProductPage = () => {
+    const navigate = useNavigate();
     const [appLoading, setAppLoading] = useState(false);
     const [dataProducts, setDataProducts] = useState([]);
     const [searchData, setSearchData] = useState("");
-    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+    // const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
 
     const filterData = dataProducts.filter((product) => {
         return (
@@ -55,7 +57,7 @@ const ProductPage = () => {
                             <button
                                 className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700"
                                 onClick={() => {
-                                    setIsModalCreateOpen(true)
+                                    navigate("/main/create-product")
                                 }}
                             >
                                 Tạo mới
@@ -67,11 +69,11 @@ const ProductPage = () => {
                             dataProducts={dataProducts}
                             filterData={filterData}/>
                     </div>
-                    <CreateProductModalControl
-                        fetchAllProducts={fetchAllProducts}
-                        isModalCreateOpen={isModalCreateOpen}
-                        setIsModalCreateOpen={setIsModalCreateOpen}
-                    />
+                    {/*<CreateProductModalControl*/}
+                    {/*    fetchAllProducts={fetchAllProducts}*/}
+                    {/*    isModalCreateOpen={isModalCreateOpen}*/}
+                    {/*    setIsModalCreateOpen={setIsModalCreateOpen}*/}
+                    {/*/>*/}
                 </>
             }
         </>

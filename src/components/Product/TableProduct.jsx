@@ -1,14 +1,17 @@
-import { CiEdit } from "react-icons/ci";
+import { CiEdit, CiSquareAlert  } from "react-icons/ci";
 import { ImBin } from "react-icons/im";
+
 import { useState } from "react";
 import UpdateProductModalControl from "./UpdateProduct.Modal.Control.jsx";
 import { Modal, notification } from "antd";
 import { deleteProductAPI, updateAvailableProductsAPI } from "../../service/api/productApi.js";
+import {useNavigate} from "react-router-dom";
 
 const TableProduct = (props) => {
-    const { dataProducts, filterData, fetchAllProducts } = props;
+    const { filterData, fetchAllProducts } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
+    const navigate = useNavigate();
 
     const handleUpdatePro = (product) => {
         setDataUpdate(product);
@@ -68,9 +71,9 @@ const TableProduct = (props) => {
         }
     };
 
-    const formatPrice = (price) => {
-        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-    };
+    // const formatPrice = (price) => {
+    //     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    // };
 
     return (
         <>
@@ -78,14 +81,11 @@ const TableProduct = (props) => {
                 <thead className="bg-blue-300 border-b border-gray-200">
                 <tr>
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">STT</th>
+                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Danh mục</th>
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Tên</th>
                     <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Hình ảnh</th>
-                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Số lượng</th>
-                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Giá gốc</th>
-                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">% giảm</th>
-                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Giá bán</th>
-                    <th className="py-2 px-4 text-center text-gray-600 font-semibold whitespace-nowrap">Tình trạng</th>
                     <th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Hành động</th>
+                    {/*<th className="py-2 px-4 text-left text-gray-600 font-semibold whitespace-nowrap">Đang bán </th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -94,32 +94,34 @@ const TableProduct = (props) => {
                     filterData.map((product, index) => (
                         <tr key={product._id} className="border-b border-gray-200 hover:bg-gray-50">
                             <td className="py-2 px-4 text-center text-sm">{index + 1}</td>
+                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.idCategory.name}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.name}</td>
                             <td className="py-2 px-4 text-sm text-center break-words w-0">
-                                <img src={product.imgUrls} alt={product.name} className="max-w-[100px] h-auto"/>
+                                <img src={product.images[0]} alt={product.name} className="max-w-[100px] h-auto"/>
                             </td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.quantity}</td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatPrice(product.price)}</td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.discount}%</td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatPrice(product.priceAfterDiscount)}</td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{product.condition}</td>
-                            <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">
-                                    <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                          onClick={() => handleUpdatePro(product)}>
-                                        <CiEdit size={20}/>
-                                    </span>
+                            <td className="py-2 px-4 text-sm text-center flex items-center space-x-4 ">
+                                <span className="text-green-500 hover:text-red-700 cursor-pointer"
+                                      onClick={() => navigate(`/main/detail-product/${product._id}`)}>
+                                    <CiSquareAlert size={26}/>
+                                </span>
+                                <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
+                                      onClick={() => handleUpdatePro(product)}>
+                                    <CiEdit size={20}/>
+                                </span>
                                 <span className="text-red-500 hover:text-red-700 cursor-pointer"
                                       onClick={() => confirmDelete(product._id)}>
-                                        <ImBin size={20}/>
-                                    </span>
+                                    <ImBin size={20}/>
+                                </span>
+                            </td>
+                            <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">
                                 <label htmlFor={`check-${product._id}`}
                                        className="bg-gray-200 cursor-pointer relative w-12 h-6 rounded-full">
                                     <input
                                         type="checkbox"
                                         id={`check-${product._id}`}
                                         className="sr-only peer"
-                                        checked={product.isActive} // Giả sử product.isActive là trạng thái của sản phẩm
-                                        onChange={() => confirmToggleStatus(product)} // Gọi hàm khi trạng thái thay đổi
+                                        checked={product.isActive}
+                                        onChange={() => confirmToggleStatus(product)}
                                     />
                                     <span
                                         className="w-5 h-5 bg-blue-300 absolute rounded-full left-1 top-0.5 peer-checked:bg-blue-600 peer-checked:left-6 transition-all duration-300"></span>

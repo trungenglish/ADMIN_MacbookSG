@@ -1,14 +1,27 @@
 import errorPage from '../../assets/403-error.jpg'
 import {AuthContext} from "../../components/context/AuthContext.jsx";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 const PrivateRoute = (props) => {
-    const {user} = useContext(AuthContext);
+    const {user, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    console.log("User: ", user);
-    if (user && user.user.name) {
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user")
+        if (storedUser) {
+            // Nếu có dữ liệu trong `localStorage`, cập nhật vào `AuthContext`
+            setUser({
+                isAuthenticated: true,
+                user: JSON.parse(storedUser)
+            });
+        } else if (!user.isAuthenticated) {
+            // Nếu không có thông tin đăng nhập, chuyển hướng đến trang đăng nhập
+            navigate("/login", { replace: true });
+        }
+    }, [user.isAuthenticated, navigate, setUser]);
+
+    if (user.isAuthenticated && user.user.name) {
         return (
             <>
                 {props.children}

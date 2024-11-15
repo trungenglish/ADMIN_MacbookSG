@@ -15,6 +15,7 @@ const UpdateProductModalControl = (props) => {
     const [idCategory, setIdCategory] = useState(""); // Lưu id danh mục
     const [categories, setCategories] = useState([]);
     const [id, setId] = useState("");
+    const [description, setDescription] = useState("");
     const [errors, setErrors] = useState({
         quantity: "",
         price: "",
@@ -32,17 +33,19 @@ const UpdateProductModalControl = (props) => {
         };
         fetchAllCategory();
     }, []);
-
+    console.log("check",dataUpdate);
     useEffect(() => {
         if (dataUpdate) {
             setName(dataUpdate.name);
             setId(dataUpdate._id);
             setQuantity(dataUpdate.quantity);
+            setCondition(dataUpdate.condition);
             setPrice(dataUpdate.price);
             setDiscount(dataUpdate.discount);
             setPriceAfterDiscount(dataUpdate.priceAfterDiscount);
-            setImage(dataUpdate.image);
+            setImage(dataUpdate.imgUrls);
             setIdCategory(dataUpdate.idCategory._id || "");
+            setDescription(dataUpdate.description);
         }
     }, [dataUpdate]);
 
@@ -100,15 +103,8 @@ const UpdateProductModalControl = (props) => {
             return;
         }
 
-        const res = await updateProductAPI(id, {
-            name,
-            quantity,
-            price,
-            discount,
-            priceAfterDiscount,
-            image,
-            idCategory
-        });
+        const res = await updateProductAPI(id, name, condition, price, priceAfterDiscount, image, description,
+            idCategory, quantity, discount);
 
         if (res.data) {
             notification.success({
@@ -137,6 +133,7 @@ const UpdateProductModalControl = (props) => {
         setImage("");
         setIdCategory("");
         setDataUpdate(null);
+        setDescription("");
     };
 
     return (
@@ -200,6 +197,15 @@ const UpdateProductModalControl = (props) => {
                 <div>
                     <label className="block text-gray-700 font-medium mb-1">Hình ảnh</label>
                     <Input value={image} onChange={(event) => setImage(event.target.value)}/>
+                </div>
+                <div>
+                    <label className="block text-gray-700 font-medium mb-1">Mô tả</label>
+                    <Input.TextArea
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}
+                        rows={4}
+                    />
                 </div>
             </div>
         </Modal>

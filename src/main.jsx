@@ -8,11 +8,9 @@ import {AuthWrapper} from "./components/context/AuthContext.jsx";
 import 'nprogress/nprogress.css';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-      <AuthWrapper>
-          <RouterProvider router={router} >
-              <App />
-          </RouterProvider>
-      </AuthWrapper>
-  </StrictMode>,
+    <AuthWrapper>
+        <RouterProvider router={router} >
+            <App />
+        </RouterProvider>
+    </AuthWrapper>
 )

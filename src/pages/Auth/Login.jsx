@@ -27,14 +27,16 @@ const Login = () => {
             if (res && res.EC === 0){
                 localStorage.setItem('access_token', res.access_token);
                 localStorage.setItem('refresh_token', res.refreshToken);
-                setUser({
+                const userData = {
                     isAuthenticated: true,
                     user: {
                         email: res?.admin?.email ?? "",
                         name: res?.admin?.name ?? "",
                         role: res?.admin?.role ?? ""
                     }
-                })
+                };
+                localStorage.setItem('user', JSON.stringify(userData));
+                setUser(userData);
                 navigate("/main/dashboard", {replace: true});
             } else{
                 setError(res.EM);
