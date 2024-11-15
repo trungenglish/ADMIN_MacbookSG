@@ -4,6 +4,7 @@ import { Input, notification, Select, Button } from "antd";
 import { getAllCategoryAPI } from "../../service/api/categoryApi.js";
 import { MdDeleteForever } from "react-icons/md";
 import { PlusOutlined } from "@ant-design/icons";
+import {useNavigate} from "react-router-dom";
 
 const CreateProduct = () => {
     const [name, setName] = useState("");
@@ -24,6 +25,7 @@ const CreateProduct = () => {
         gps: "", bluetooth: "", chargingPort: "", headphoneJack: "", otherConnections: "", design: "",
         material: "", dimensions: "", weight: "", releaseDate: ""
     });
+    const navigate = useNavigate();
     const cloudinaryWidgetRef = useRef(null);
 
     useEffect(() => {
@@ -101,6 +103,7 @@ const CreateProduct = () => {
                     description: "Tạo mới sản phẩm thành công",
                 });
                 resetForm();
+                navigate("/main/products");
             } else {
                 throw new Error(res.message || "Lỗi không xác định");
             }
@@ -161,6 +164,7 @@ const CreateProduct = () => {
                         <Input placeholder="Màu sắc" value={defaultVariant.color} onChange={(e) => setDefaultVariant({ ...defaultVariant, color: e.target.value })} />
                         <Input placeholder="Giá" value={defaultVariant.price} onChange={(e) => setDefaultVariant({ ...defaultVariant, price: e.target.value })} />
                         <Input placeholder="Giảm giá (%)" value={defaultVariant.discount} onChange={(e) => setDefaultVariant({ ...defaultVariant, discount: e.target.value })} />
+                        <Input placeholder="Số lượng tồn kho" value={defaultVariant.stock} onChange={(e) => setDefaultVariant({ ...defaultVariant, stock: e.target.value })} />
                         <Input placeholder="Giá bán sau giảm" value={defaultVariant.priceAfterDiscount} disabled />
                     </div>
 
@@ -180,7 +184,7 @@ const CreateProduct = () => {
                 </div>
 
                 <div className="space-y-3">
-                    <h2 className="text-lg font-semibold">Thông số kỹ thuật</h2>
+                    <h2 className="text-lg font-semibold">Thông số kỹ thuật (không bắt buộc)</h2>
                     <div className="max-h-96 overflow-y-auto space-y-4">
                         <Input placeholder="Hệ điều hành" value={specifications.os}
                                onChange={(e) => setSpecifications({ ...specifications, os: e.target.value })} />

@@ -11,6 +11,7 @@ import AdministratorPage from "../pages/Administrator.jsx";
 import OrderPage from "../pages/Order.jsx";
 import Messages from "../pages/Messages.jsx";
 import CreateProduct from "../components/Product/CreateProduct.jsx";
+import DetailProduct from "../components/Product/DetailProduct.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
             {
                 path: "create-product",
                 element: <CreateProduct/>
+            },
+            {
+                path: "detail-product/:id",
+                element: <DetailProduct/>,
             }
         ]
     },

@@ -9,7 +9,6 @@ const PrivateRoute = (props) => {
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user")
-        console.log(storedUser);
         if (storedUser) {
             // Nếu có dữ liệu trong `localStorage`, cập nhật vào `AuthContext`
             setUser({

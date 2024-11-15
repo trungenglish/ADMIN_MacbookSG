@@ -46,6 +46,12 @@ const deleteProductAPI = async (id) => {
     return axios.delete(URL_API);
 }
 
+const getProductByIdAPI = async (id) => {
+    const URL_API = `/api/v1/admin/productById/${id}`;
+    return axios.get(URL_API);
+}
+
 export {
-    getAllProductAPI, updateProductAPI, createProductAPI, deleteProductAPI, updateAvailableProductsAPI
+    getAllProductAPI, updateProductAPI, createProductAPI, deleteProductAPI, updateAvailableProductsAPI,
+    getProductByIdAPI
 }

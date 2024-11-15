@@ -23,7 +23,7 @@ function App() {
         const fetchAccount = async () => {
             setAppLoading(true);
             const res = await axios.get("/api/v1/admin/account");
-            console.log('res', res)
+
             if (res && !res.message) {
                 setUser({
                     isAuthenticated: true,
