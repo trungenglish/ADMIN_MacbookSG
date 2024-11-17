@@ -160,7 +160,7 @@ const DetailProduct = () => {
                             <td className="py-2 px-4 text-sm text-center">{variant.storage}</td>
                             <td className="py-2 px-4 text-sm text-center">{variant.quantity}</td>
                             <td className="py-2 px-4 text-sm text-center">{variant.price.toLocaleString()} VND</td>
-                            <td className="py-2 px-4 text-sm text-center">{(variant.discount * 100).toFixed(0)}%</td>
+                            <td className="py-2 px-4 text-sm text-center">{(variant.discount).toFixed(0)}%</td>
                             <td className="py-2 px-4 text-sm text-center">{variant.priceAfterDiscount.toLocaleString()} VND</td>
                             <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">
                             <span className="text-blue-500 hover:text-blue-700 cursor-pointer"

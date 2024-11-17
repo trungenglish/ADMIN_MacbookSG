@@ -13,7 +13,7 @@ const CreateProduct = () => {
     const [categories, setCategories] = useState([]);
     const [productImages, setProductImages] = useState([]);
     const [defaultVariant, setDefaultVariant] = useState({
-        storage: "", color: "", price: "", stock: "", discount: "", priceAfterDiscount: ""
+        storage: "", color: "", price: "", stock: "", discount: "", priceAfterDiscount: "", condition: ""
     });
     const [variants, setVariants] = useState([]);
     const [specifications, setSpecifications] = useState({
@@ -96,7 +96,7 @@ const CreateProduct = () => {
 
     const handleSubmit = async () => {
         try {
-            const res = await createProductAPI(name, description, idCategory, defaultVariant, variants, productImages);
+            const res = await createProductAPI(name, description, idCategory, defaultVariant, variants, productImages, specifications);
             if (res && res.data) {
                 notification.success({
                     message: "Tạo mới sản phẩm",
@@ -120,7 +120,7 @@ const CreateProduct = () => {
         setDescription("");
         setIdCategory("");
         setProductImages([]);
-        setDefaultVariant({ storage: "", color: "", price: "", stock: "", discount: "", priceAfterDiscount: "" });
+        setDefaultVariant({ storage: "", color: "", price: "", stock: "", discount: "", priceAfterDiscount: "", condition: "" });
         setVariants([]);
         setSpecifications({
             os: "", chip: "", gpu: "", ram: "", storage: "", availableStorage: "", rearCameraResolution: "",
@@ -165,6 +165,7 @@ const CreateProduct = () => {
                         <Input placeholder="Giá" value={defaultVariant.price} onChange={(e) => setDefaultVariant({ ...defaultVariant, price: e.target.value })} />
                         <Input placeholder="Giảm giá (%)" value={defaultVariant.discount} onChange={(e) => setDefaultVariant({ ...defaultVariant, discount: e.target.value })} />
                         <Input placeholder="Số lượng tồn kho" value={defaultVariant.stock} onChange={(e) => setDefaultVariant({ ...defaultVariant, stock: e.target.value })} />
+                        <Input placeholder="Tình trạng" value={defaultVariant.condition} onChange={(e) => setDefaultVariant({ ...defaultVariant, condition: e.target.value })} />
                         <Input placeholder="Giá bán sau giảm" value={defaultVariant.priceAfterDiscount} disabled />
                     </div>
 
@@ -176,6 +177,7 @@ const CreateProduct = () => {
                             <Input placeholder="Giá" value={variant.price} onChange={(e) => handleVariantChange(index, "price", e.target.value)} />
                             <Input placeholder="Giảm giá (%)" value={variant.discount} onChange={(e) => handleVariantChange(index, "discount", e.target.value)} />
                             <Input placeholder="Số lượng tồn kho" value={variant.stock} onChange={(e) => handleVariantChange(index, "stock", e.target.value)} />
+                            <Input placeholder="Tình trạng" value={variant.condition} onChange={(e) => handleVariantChange(index, "condition", e.target.value)} />
                             <Input placeholder="Giá bán sau giảm" value={variant.priceAfterDiscount} disabled />
                             <Button icon={<MdDeleteForever />} className="text-red-500" onClick={() => handleRemoveVariant(index)} type="text" />
                         </div>
@@ -190,75 +192,75 @@ const CreateProduct = () => {
                                onChange={(e) => setSpecifications({ ...specifications, os: e.target.value })} />
                         <Input placeholder="Chip xử lý" value={specifications.chip}
                                onChange={(e) => setSpecifications({ ...specifications, chip: e.target.value })} />
-                        <Input placeholder="Chip đồ họa" value={specifications.chip}
+                        <Input placeholder="Chip đồ họa" value={specifications.gpu}
                                onChange={(e) => setSpecifications({ ...specifications, gpu: e.target.value })} />
-                        <Input placeholder="RAM" value={specifications.chip}
+                        <Input placeholder="RAM" value={specifications.ram}
                                onChange={(e) => setSpecifications({ ...specifications, ram: e.target.value })} />
-                        <Input placeholder="Dung lượng lưu trữ" value={specifications.chip}
+                        <Input placeholder="Dung lượng lưu trữ" value={specifications.storage}
                                onChange={(e) => setSpecifications({ ...specifications, storage: e.target.value })} />
-                        <Input placeholder="Dung lượng còn lại" value={specifications.chip}
+                        <Input placeholder="Dung lượng còn lại" value={specifications.availableStorage}
                                onChange={(e) => setSpecifications({ ...specifications, availableStorage: e.target.value })} />
-                        <Input placeholder="Độ phân giải camera sau" value={specifications.chip}
+                        <Input placeholder="Độ phân giải camera sau" value={specifications.rearCameraResolution}
                                onChange={(e) => setSpecifications({ ...specifications, rearCameraResolution: e.target.value })} />
-                        <Input placeholder="Quay phim camera sau" value={specifications.chip}
+                        <Input placeholder="Quay phim camera sau" value={specifications.rearCameraVideo}
                                onChange={(e) => setSpecifications({ ...specifications, rearCameraVideo: e.target.value })} />
-                        <Input placeholder="Đèn flash camera sau" value={specifications.chip}
+                        <Input placeholder="Đèn flash camera sau" value={specifications.rearCameraFlash}
                                onChange={(e) => setSpecifications({ ...specifications, rearCameraFlash: e.target.value })} />
-                        <Input placeholder="Tính năng camera sau" value={specifications.chip}
+                        <Input placeholder="Tính năng camera sau" value={specifications.rearCameraFeatures}
                                onChange={(e) => setSpecifications({ ...specifications, rearCameraFeatures: e.target.value })} />
-                        <Input placeholder="Độ phân giải camera trước" value={specifications.chip}
+                        <Input placeholder="Độ phân giải camera trước" value={specifications.frontCameraResolution}
                                onChange={(e) => setSpecifications({ ...specifications, frontCameraResolution: e.target.value })} />
-                        <Input placeholder="Tính năng camera trước" value={specifications.chip}
+                        <Input placeholder="Tính năng camera trước" value={specifications.frontCameraFeatures}
                                onChange={(e) => setSpecifications({ ...specifications, frontCameraFeatures: e.target.value })} />
-                        <Input placeholder="Công nghệ màn hình" value={specifications.chip}
+                        <Input placeholder="Công nghệ màn hình" value={specifications.screenTechnology}
                                onChange={(e) => setSpecifications({ ...specifications, screenTechnology: e.target.value })} />
-                        <Input placeholder="Độ phân giải màn hình" value={specifications.chip}
+                        <Input placeholder="Độ phân giải màn hình" value={specifications.screenResolution}
                                onChange={(e) => setSpecifications({ ...specifications, screenResolution: e.target.value })} />
-                        <Input placeholder="Màn hình rộng" value={specifications.chip}
+                        <Input placeholder="Màn hình rộng" value={specifications.screenSize}
                                onChange={(e) => setSpecifications({ ...specifications, screenSize: e.target.value })} />
-                        <Input placeholder="Độ sáng tối đa" value={specifications.chip}
+                        <Input placeholder="Độ sáng tối đa" value={specifications.maxBrightness}
                                onChange={(e) => setSpecifications({ ...specifications, maxBrightness: e.target.value })} />
-                        <Input placeholder="Mặt kính cảm ứng" value={specifications.chip}
+                        <Input placeholder="Mặt kính cảm ứng" value={specifications.touchGlass}
                                onChange={(e) => setSpecifications({ ...specifications, touchGlass: e.target.value })} />
-                        <Input placeholder="Dung lượng pin" value={specifications.chip}
+                        <Input placeholder="Dung lượng pin" value={specifications.batteryCapacity}
                                onChange={(e) => setSpecifications({ ...specifications, batteryCapacity: e.target.value })} />
-                        <Input placeholder="Loại pin" value={specifications.chip}
+                        <Input placeholder="Loại pin" value={specifications.batteryType}
                                onChange={(e) => setSpecifications({ ...specifications, batteryType: e.target.value })} />
-                        <Input placeholder="Hỗ trợ sạc tối đa" value={specifications.chip}
+                        <Input placeholder="Hỗ trợ sạc tối đa" value={specifications.maxChargingSupport}
                                onChange={(e) => setSpecifications({ ...specifications, maxChargingSupport: e.target.value })} />
-                        <Input placeholder="Công nghệ pin" value={specifications.chip}
+                        <Input placeholder="Công nghệ pin" value={specifications.batteryTechnology}
                                onChange={(e) => setSpecifications({ ...specifications, batteryTechnology: e.target.value })} />
-                        <Input placeholder="Bảo mật nâng cao" value={specifications.chip}
+                        <Input placeholder="Bảo mật nâng cao" value={specifications.advancedSecurity}
                                onChange={(e) => setSpecifications({ ...specifications, advancedSecurity: e.target.value })} />
-                        <Input placeholder="Tính năng đặc biệt" value={specifications.chip}
+                        <Input placeholder="Tính năng đặc biệt" value={specifications.specialFeatures}
                                onChange={(e) => setSpecifications({ ...specifications, specialFeatures: e.target.value })} />
-                        <Input placeholder="Kháng nước, bụi" value={specifications.chip}
+                        <Input placeholder="Kháng nước, bụi" value={specifications.waterResistance}
                                onChange={(e) => setSpecifications({ ...specifications, waterResistance: e.target.value })} />
-                        <Input placeholder="Mạng di động" value={specifications.chip}
+                        <Input placeholder="Mạng di động" value={specifications.mobileNetwork}
                                onChange={(e) => setSpecifications({ ...specifications, mobileNetwork: e.target.value })} />
-                        <Input placeholder="SIM" value={specifications.chip}
+                        <Input placeholder="SIM" value={specifications.sim}
                                onChange={(e) => setSpecifications({ ...specifications, sim: e.target.value })} />
-                        <Input placeholder="Wifi" value={specifications.chip}
+                        <Input placeholder="Wifi" value={specifications.wifi}
                                onChange={(e) => setSpecifications({ ...specifications, wifi: e.target.value })} />
-                        <Input placeholder="GPS" value={specifications.chip}
+                        <Input placeholder="GPS" value={specifications.gps}
                                onChange={(e) => setSpecifications({ ...specifications, gps: e.target.value })} />
-                        <Input placeholder="Bluetooth" value={specifications.chip}
+                        <Input placeholder="Bluetooth" value={specifications.bluetooth}
                                onChange={(e) => setSpecifications({ ...specifications, bluetooth: e.target.value })} />
-                        <Input placeholder="Cổng kết nối/ sạc" value={specifications.chip}
+                        <Input placeholder="Cổng kết nối/ sạc" value={specifications.chargingPort}
                                onChange={(e) => setSpecifications({ ...specifications, chargingPort: e.target.value })} />
-                        <Input placeholder="Jack tai nghe" value={specifications.chip}
+                        <Input placeholder="Jack tai nghe" value={specifications.headphoneJack}
                                onChange={(e) => setSpecifications({ ...specifications, headphoneJack: e.target.value })} />
-                        <Input placeholder="Kết nối khác (NFC, v.v.)" value={specifications.chip}
+                        <Input placeholder="Kết nối khác (NFC, v.v.)" value={specifications.otherConnections}
                                onChange={(e) => setSpecifications({ ...specifications, otherConnections: e.target.value })} />
-                        <Input placeholder="Thiết kế" value={specifications.chip}
+                        <Input placeholder="Thiết kế" value={specifications.design}
                                onChange={(e) => setSpecifications({ ...specifications, design: e.target.value })} />
-                        <Input placeholder="Chất liệu" value={specifications.chip}
+                        <Input placeholder="Chất liệu" value={specifications.material}
                                onChange={(e) => setSpecifications({ ...specifications, material: e.target.value })} />
-                        <Input placeholder="Kích thước" value={specifications.chip}
+                        <Input placeholder="Kích thước" value={specifications.dimensions}
                                onChange={(e) => setSpecifications({ ...specifications, dimensions: e.target.value })} />
-                        <Input placeholder="Khối lượng" value={specifications.chip}
+                        <Input placeholder="Khối lượng" value={specifications.weight}
                                onChange={(e) => setSpecifications({ ...specifications, weight: e.target.value })} />
-                        <Input placeholder="Thời điểm ra mắt" value={specifications.chip}
+                        <Input placeholder="Thời điểm ra mắt" value={specifications.releaseDate}
                                onChange={(e) => setSpecifications({ ...specifications, releaseDate: e.target.value })} />
                     </div>
                 </div>
