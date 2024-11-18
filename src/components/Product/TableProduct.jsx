@@ -1,22 +1,13 @@
 import { CiEdit, CiSquareAlert  } from "react-icons/ci";
 import { ImBin } from "react-icons/im";
 
-import { useState } from "react";
-import UpdateProductModalControl from "./UpdateProduct.Modal.Control.jsx";
 import { Modal, notification } from "antd";
 import { deleteProductAPI, updateAvailableProductsAPI } from "../../service/api/productApi.js";
 import {useNavigate} from "react-router-dom";
 
 const TableProduct = (props) => {
     const { filterData, fetchAllProducts } = props;
-    const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
-    const [dataUpdate, setDataUpdate] = useState(null);
     const navigate = useNavigate();
-
-    const handleUpdatePro = (product) => {
-        setDataUpdate(product);
-        setIsModalUpdateOpen(true);
-    };
 
     const confirmDelete = (_id) => {
         Modal.confirm({
@@ -71,10 +62,6 @@ const TableProduct = (props) => {
         }
     };
 
-    // const formatPrice = (price) => {
-    //     return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-    // };
-
     return (
         <>
             <table className="min-w-full bg-white border border-gray-200 w-full">
@@ -105,7 +92,7 @@ const TableProduct = (props) => {
                                     <CiSquareAlert size={26}/>
                                 </span>
                                 <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                      onClick={() => handleUpdatePro(product)}>
+                                      onClick={() => navigate(`/main/update-product/${product._id}`)}>
                                     <CiEdit size={20}/>
                                 </span>
                                 <span className="text-red-500 hover:text-red-700 cursor-pointer"
@@ -140,13 +127,13 @@ const TableProduct = (props) => {
                 </tbody>
             </table>
 
-            <UpdateProductModalControl
-                fetchAllProducts={fetchAllProducts}
-                isModalUpdateOpen={isModalUpdateOpen}
-                setIsModalUpdateOpen={setIsModalUpdateOpen}
-                dataUpdate={dataUpdate}
-                setDataUpdate={setDataUpdate}
-            />
+            {/*<UpdateProductModalControl*/}
+            {/*    fetchAllProducts={fetchAllProducts}*/}
+            {/*    isModalUpdateOpen={isModalUpdateOpen}*/}
+            {/*    setIsModalUpdateOpen={setIsModalUpdateOpen}*/}
+            {/*    dataUpdate={dataUpdate}*/}
+            {/*    setDataUpdate={setDataUpdate}*/}
+            {/*/>*/}
         </>
     );
 };

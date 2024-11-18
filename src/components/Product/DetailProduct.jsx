@@ -163,11 +163,6 @@ const DetailProduct = () => {
                             <td className="py-2 px-4 text-sm text-center">{(variant.discount).toFixed(0)}%</td>
                             <td className="py-2 px-4 text-sm text-center">{variant.priceAfterDiscount.toLocaleString()} VND</td>
                             <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">
-                            <span className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                                  onClick={() => handleUpdatePro(variant)}>
-                                    <CiEdit size={20}/>
-                                </span>
-
                                 {index !== 0 && (
                                     <span className="text-red-500 hover:text-red-700 cursor-pointer"
                                           onClick={() => confirmDelete(variant._id, index)}>

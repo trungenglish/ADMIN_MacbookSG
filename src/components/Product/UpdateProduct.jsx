@@ -1,30 +1,62 @@
 import { useEffect, useRef, useState } from "react";
-import { createProductAPI } from "../../service/api/productApi.js";
 import { Input, notification, Select, Button } from "antd";
 import { getAllCategoryAPI } from "../../service/api/categoryApi.js";
 import { MdDeleteForever } from "react-icons/md";
 import { PlusOutlined } from "@ant-design/icons";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {getProductByIdAPI, updateProductAPI} from "../../service/api/productApi.js";
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
+    const {id} = useParams();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [idCategory, setIdCategory] = useState("");
     const [categories, setCategories] = useState([]);
     const [productImages, setProductImages] = useState([]);
     const [defaultVariant, setDefaultVariant] = useState({
-        storage: "", color: "", price: "", quantity: "", discount: "", priceAfterDiscount: "", condition: ""
+        id: "",storage: "", color: "", price: "", discount: "", quantity: "",priceAfterDiscount: "", condition: ""
     });
     const [variants, setVariants] = useState([]);
     const [specifications, setSpecifications] = useState({
-        os: "", chip: "", gpu: "", ram: "", storage: "", availableStorage: "", rearCameraResolution: "",
-        rearCameraVideo: "", rearCameraFlash: "", rearCameraFeatures: "", frontCameraResolution: "",
-        frontCameraFeatures: "", screenTechnology: "", screenResolution: "", screenSize: "", maxBrightness: "",
-        touchGlass: "", batteryCapacity: "", batteryType: "", maxChargingSupport: "", batteryTechnology: "",
-        advancedSecurity: "", specialFeatures: "", waterResistance: "", mobileNetwork: "", sim: "", wifi: "",
-        gps: "", bluetooth: "", chargingPort: "", headphoneJack: "", otherConnections: "", design: "",
-        material: "", dimensions: "", weight: "", releaseDate: ""
+        operatingSystem: "",  // Hệ điều hành
+        cpu: "",              // cpu xử lý (CPU)
+        gpu: "",              // cpu đồ họa (GPU)
+        ram: "",              // RAM
+        storage: "",          // Dung lượng lưu trữ
+        availableStorage: "", // Dung lượng còn lại (khả dụng)
+        rearCameraResolution: "", // Độ phân giải camera sau
+        rearCameraVideo: "",    // Quay phim camera sau
+        rearCameraFlash: "",      // Đèn flash camera sau
+        rearCameraFeatures: "", // Tính năng camera sau
+        frontCameraResolution: "", // Độ phân giải camera trước
+        frontCameraFeatures: "", // Tính năng camera trước
+        screenTechnology: "",      // Công nghệ màn hình
+        screenResolution: "",      // Độ phân giải màn hình
+        screenSize: "",            // Màn hình rộng
+        maxBrightness: "",         // Độ sáng tối đa
+        touchGlass: "",            // Mặt kính cảm ứng
+        batteryCapacity: "",       // Dung lượng pin
+        batteryType: "",           // Loại pin
+        maxChargingSupport: "",    // Hỗ trợ sạc tối đa
+        batteryTechnology: "",   // Công nghệ pin
+        advancedSecurity: "",      // Bảo mật nâng cao
+        specialFeatures: "",     // Tính năng đặc biệt
+        waterResistance: "",       // Kháng nước, bụi
+        mobileNetwork: "",         // Mạng di động
+        sim: "",                   // SIM
+        wifi: "",                // WiFi
+        gps: "",                 // GPS
+        bluetooth: "",             // Bluetooth
+        chargingPort: "",          // Cổng kết nối/ sạc
+        headphoneJack: "",         // Jack tai nghe
+        otherConnections: "",    // Kết nối khác (NFC, v.v.)
+        design: "",                // Thiết kế
+        material: "",              // Chất liệu
+        dimensions: "",            // Kích thước
+        weight: "",                // Khối lượng
+        releaseDate: ""
     });
+
     const navigate = useNavigate();
     const cloudinaryWidgetRef = useRef(null);
 
@@ -35,6 +67,40 @@ const CreateProduct = () => {
         };
         fetchAllCategory();
     }, []);
+
+    useEffect(() => {
+        const fetchProductDetails = async () => {
+            const res = await getProductByIdAPI(id);
+            console.log(res);
+            if (res && res.EC === 0) {
+                const product = res.data;
+                setName(product.mainProduct.name);
+                setDescription(product.mainProduct.description);
+                setIdCategory(product.mainProduct.idCategory._id);
+                setProductImages(product.mainProduct.images || []);
+                const [firstVariant, ...otherVariants] = product.variants || [];
+                setDefaultVariant({
+                    id: firstVariant?._id || "",
+                    quantity: firstVariant?.quantity || "",
+                    storage: firstVariant?.storage || "",
+                    color: firstVariant?.color || "",
+                    price: firstVariant?.price || "",
+                    discount: firstVariant?.discount || "",
+                    priceAfterDiscount: calculateDiscountedPrice(firstVariant?.price, firstVariant?.discount),
+                    condition: firstVariant?.condition || ""
+                });
+
+                setVariants(otherVariants);
+                setSpecifications(product.mainProduct.idProDetail || {});
+            } else {
+                notification.error({
+                    message: "Lỗi khi tải sản phẩm",
+                    description: "Không thể tải thông tin sản phẩm.",
+                });
+            }
+        };
+        fetchProductDetails();
+    }, [id]);
 
     const calculateDiscountedPrice = (price, discount) => {
         const numberPrice = Number(price);
@@ -96,11 +162,11 @@ const CreateProduct = () => {
 
     const handleSubmit = async () => {
         try {
-            const res = await createProductAPI(name, description, idCategory, defaultVariant, variants, productImages, specifications);
+            const res = await updateProductAPI(id, name, description, idCategory, defaultVariant, variants, productImages, specifications);
             if (res && res.data) {
                 notification.success({
-                    message: "Tạo mới sản phẩm",
-                    description: "Tạo mới sản phẩm thành công",
+                    message: "Cập nhật sản phẩm",
+                    description: "Cập nhật sản phẩm thành công",
                 });
                 navigate("/main/products");
             } else {
@@ -108,13 +174,11 @@ const CreateProduct = () => {
             }
         } catch (error) {
             notification.error({
-                message: "Lỗi khi tạo mới sản phẩm",
+                message: "Lỗi khi ập nhật sản phẩm",
                 description: error.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại sau.",
             });
         }
     };
-
-
 
     return (
         <div className="container mx-auto p-4">
@@ -171,11 +235,11 @@ const CreateProduct = () => {
                 <div className="space-y-3">
                     <h2 className="text-lg font-semibold">Thông số kỹ thuật (không bắt buộc)</h2>
                     <div className="max-h-96 overflow-y-auto space-y-4">
-                        <Input placeholder="Hệ điều hành" value={specifications.os}
-                               onChange={(e) => setSpecifications({ ...specifications, os: e.target.value })} />
-                        <Input placeholder="Chip xử lý" value={specifications.chip}
-                               onChange={(e) => setSpecifications({ ...specifications, chip: e.target.value })} />
-                        <Input placeholder="Chip đồ họa" value={specifications.gpu}
+                        <Input placeholder="Hệ điều hành" value={specifications.operatingSystem}
+                               onChange={(e) => setSpecifications({ ...specifications, operatingSystem: e.target.value })} />
+                        <Input placeholder="cpu xử lý" value={specifications.cpu}
+                               onChange={(e) => setSpecifications({ ...specifications, cpu: e.target.value })} />
+                        <Input placeholder="cpu đồ họa" value={specifications.gpu}
                                onChange={(e) => setSpecifications({ ...specifications, gpu: e.target.value })} />
                         <Input placeholder="RAM" value={specifications.ram}
                                onChange={(e) => setSpecifications({ ...specifications, ram: e.target.value })} />
@@ -248,9 +312,9 @@ const CreateProduct = () => {
                     </div>
                 </div>
             </div>
-            <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg" onClick={handleSubmit}>Tạo sản phẩm</button>
+            <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg" onClick={handleSubmit}>Cập nhật sản phẩm</button>
         </div>
     );
 };
 
-export default CreateProduct;
+export default UpdateProduct;
