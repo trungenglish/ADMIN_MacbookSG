@@ -49,14 +49,6 @@ const OrderPage = () => {
                                 setSearchData={setSearchData}
                                 placeholder="Tìm kiếm đơn hàng theo sdt"
                             />
-                            <button
-                                className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg hover:bg-green-700"
-                                onClick={() => {
-                                    setIsModalCreateOpen(true)
-                                }}
-                            >
-                                Tạo mới
-                            </button>
                         </div>
 
                         <TableOrder

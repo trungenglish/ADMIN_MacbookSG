@@ -33,7 +33,6 @@ const UpdateProductModalControl = (props) => {
         };
         fetchAllCategory();
     }, []);
-    console.log("check",dataUpdate);
     useEffect(() => {
         if (dataUpdate) {
             setName(dataUpdate.name);

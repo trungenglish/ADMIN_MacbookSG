@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {getAllProductAPI} from "../service/api/productApi.js";
 import TableProduct from "../components/Product/TableProduct.jsx";
 import SearchBar from "../components/share/SearchBar.jsx";
-import CreateProductModalControl from "../components/Product/CreateProduct.Modal.Control.jsx";
 import {Spin} from "antd";
 import {useNavigate} from "react-router-dom";
 
@@ -66,14 +65,8 @@ const ProductPage = () => {
 
                         <TableProduct
                             fetchAllProducts={fetchAllProducts}
-                            dataProducts={dataProducts}
                             filterData={filterData}/>
                     </div>
-                    {/*<CreateProductModalControl*/}
-                    {/*    fetchAllProducts={fetchAllProducts}*/}
-                    {/*    isModalCreateOpen={isModalCreateOpen}*/}
-                    {/*    setIsModalCreateOpen={setIsModalCreateOpen}*/}
-                    {/*/>*/}
                 </>
             }
         </>

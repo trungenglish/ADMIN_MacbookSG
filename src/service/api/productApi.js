@@ -25,18 +25,16 @@ const createProductAPI = async (name, description, idCategory, defaultVariant, v
     return axios.post(URL_API, data);
 }
 
-const updateProductAPI = async (id, name, condition, price,priceAfterDiscount, imgUrls, description, idCategory, quantity, discount) => {
+const updateProductAPI = async (id, name, description, idCategory, defaultVariant, variants, images, specifications) => {
     const data = {
         _id: id,
         name: name,
-        condition: condition,
-        price: price,
-        priceAfterDiscount: priceAfterDiscount,
-        imgUrls: imgUrls,
         description: description,
         idCategory: idCategory,
-        quantity: quantity,
-        discount: discount
+        images: images,
+        defaultVariant: defaultVariant,
+        variants: variants,
+        specifications: specifications
     }
     const URL_API = "/api/v1/admin/product";
     return axios.put(URL_API, data);

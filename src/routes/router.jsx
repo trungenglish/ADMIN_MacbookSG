@@ -12,6 +12,7 @@ import OrderPage from "../pages/Order.jsx";
 import Messages from "../pages/Messages.jsx";
 import CreateProduct from "../components/Product/CreateProduct.jsx";
 import DetailProduct from "../components/Product/DetailProduct.jsx";
+import UpdateProduct from "../components/Product/UpdateProduct.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -68,7 +69,11 @@ export const router = createBrowserRouter([
             {
                 path: "detail-product/:id",
                 element: <DetailProduct/>,
-            }
+            },
+            {
+                path: "update-product/:id",
+                element: <UpdateProduct/>
+            },
         ]
     },
 ]);

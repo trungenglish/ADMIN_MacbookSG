@@ -24,6 +24,7 @@ export const links = [
     href: "/main/dashboard",
     icon: FaChartBar,
     text: "Bảng điều khiển",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
   {
     href: "/main/administrators",
@@ -34,6 +35,7 @@ export const links = [
       color: "bg-gray-100 text-gray-800",
       darkColor: "dark:bg-gray-700 dark:text-gray-300",
     },
+    roles: ["quản trị"]
   },
   {
     href: "/main/messages",
@@ -44,36 +46,43 @@ export const links = [
       color: "bg-blue-100 text-blue-800",
       darkColor: "dark:bg-blue-900 dark:text-blue-300",
     },
+    roles: ["quản trị", 'hỗ trợ khách hàng']
   },
   {
     href: "/main/users",
     icon: FaUsersCog,
     text: "Quản lý khách hàng",
+    roles: ["quản trị", 'hỗ trợ khách hàng']
   },
   {
     href: "/main/category",
     icon: BiCategoryAlt,
     text: "Danh mục",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
   {
     href: "/main/products",
     icon: FaListAlt,
     text: "Sản phẩm",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
   {
     href: "/main/orders",
     icon: FaClipboardCheck,
     text: "Đơn hàng",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
   {
     href: "/main/reviews",
     icon: MdOutlineReviews,
     text: "Quản lý đánh giá",
+    roles: ["quản trị", 'hỗ trợ khách hàng']
   },
   {
     href: "/logout",
     icon: IoIosLogOut,
     text: "Đăng xuất",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
 ];
 
