@@ -22,12 +22,15 @@ const OrderPage = () => {
 
     const fetchAllOrders = async () => {
         const res = await getAllOrderAPI();
+        console.log("res", res);
         if (res && res.EC === 0) {
             setDataOrders(res.data);
         } else {
             setDataOrders([]);
         }
     }
+
+    console.log("dataOrders", dataOrders);
 
     return (
         <>
