@@ -3,6 +3,8 @@ import { ImBin } from "react-icons/im";
 import { useState } from "react";
 import {Drawer, Modal, notification} from "antd";
 import {deleteOrderAPI} from "../../service/api/orderApi.js";
+import { format } from "date-fns";
+import {vi} from "date-fns/locale";
 
 const TableOrder = (props) => {
     const { filterData, fetchAllOrders } = props;
@@ -42,6 +44,10 @@ const TableOrder = (props) => {
         }
     };
 
+    const formatDate = (date) => {
+        return format(new Date(date), "HH:mm:ss dd/MM/yyyy", { locale: vi });
+    }
+
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
@@ -77,7 +83,7 @@ const TableOrder = (props) => {
                             onClick={() => showDrawer(order)}>
                             <td className="py-2 px-4 text-center text-sm">{index + 1}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{order.idUser.phone}</td>
-                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{order.createdAt}</td>
+                            <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatDate(order.createdAt)}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{formatPrice(order.totalPrice)}</td>
                             <td className="py-2 px-4 text-sm text-center hidden md:table-cell">{order.status}</td>
                             <td className="py-2 px-4 text-sm text-center flex items-center space-x-4">

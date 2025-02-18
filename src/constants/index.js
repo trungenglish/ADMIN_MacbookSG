@@ -8,7 +8,7 @@ import {
   IoIosEyeOff,
   IoIosLogOut,
 } from "react-icons/io";
-import { BiCategoryAlt } from "react-icons/bi";
+import { BiCategoryAlt, BiNews } from "react-icons/bi";
 import { MdOutlineReviews } from "react-icons/md";
 import { FaClipboardCheck } from "react-icons/fa6";
 import {
@@ -36,6 +36,12 @@ export const links = [
       darkColor: "dark:bg-gray-700 dark:text-gray-300",
     },
     roles: ["quản trị"]
+  },
+  {
+    href: "/main/dashboard",
+    icon: BiNews,
+    text: "Bài viết",
+    roles: ["quản trị", 'hỗ trợ khách hàng', 'quản lý tài chính']
   },
   {
     href: "/main/messages",

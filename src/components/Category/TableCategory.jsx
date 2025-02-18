@@ -4,6 +4,8 @@ import UpdateCategoryModalControl from "./UpdateCategory.Modal.Control.jsx";
 import { useState } from "react";
 import { deleteCategoryAPI } from "../../service/api/categoryApi.js";
 import {Modal, notification} from "antd";
+import {format} from "date-fns";
+import {vi} from "date-fns/locale";
 
 const CategoryTable = (props) => {
     const { dataCategory, fetchAllCategory, filterData } = props;
@@ -41,6 +43,10 @@ const CategoryTable = (props) => {
         }
     };
 
+    const formatDate = (date) => {
+        return format(new Date(date), "HH:mm:ss dd/MM/yyyy", { locale: vi });
+    }
+
     return (
         <>
             <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
@@ -60,11 +66,7 @@ const CategoryTable = (props) => {
                             <td className="py-2 px-4 text-gray-700">{index + 1}</td>
                             <td className="py-2 px-4 text-gray-700">{category.name}</td>
                             <td className="py-2 px-4 text-gray-700">
-                                {new Date(category.createdAt).toLocaleDateString('vi-VN', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                })}
+                                {formatDate(category.createdAt)}
                             </td>
                             <td className="py-2 px-4 flex items-center space-x-2">
                                 <span className="text-blue-500 hover:text-blue-700 cursor-pointer"

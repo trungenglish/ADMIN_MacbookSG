@@ -19,7 +19,6 @@ const DetailProduct = () => {
         try {
             setAppLoading(true)
             const res = await getProductByIdAPI(id);
-            console.log("res: ", res);
             if (res && res.EC === 0) {
                 setProduct(res.data.mainProduct);
                 setVariants(res.data.variants);

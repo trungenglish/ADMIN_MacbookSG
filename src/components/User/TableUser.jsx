@@ -57,9 +57,9 @@ const TableUser = (props) => {
                                     <span className="text-blue-500 hover:text-blue-700 cursor-pointer" onClick={() => handleUpdateUser(user)}>
                                         <CiEdit size={20} />
                                     </span>
-                                <span className="text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDeleteUser(user._id)}>
-                                        <ImBin size={20} />
-                                    </span>
+                                {/*<span className="text-red-500 hover:text-red-700 cursor-pointer" onClick={() => handleDeleteUser(user._id)}>*/}
+                                {/*        <ImBin size={20} />*/}
+                                {/*    </span>*/}
                             </td>
                         </tr>
                     ))
